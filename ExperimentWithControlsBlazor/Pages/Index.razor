@@ -1,0 +1,111 @@
+﻿@page "/"
+
+<PageTitle>Controls</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <h1>Experiment with controls</h1>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">
+            Enter text:
+        </div>
+        <div class="col-sm-6">
+            <input type="text" placeholder="Enter text" @onchange="UpdateNumericValue" />
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">
+            Pick a number:
+        </div>
+        <div class="col-sm-6">
+            <input type="range" placeholder=50 @onchange="UpdateSliderValue" />
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">Click a number:</div>
+        <div class="col-sm-6 btn-group" role="group">
+            @for (var buttonNumber = 1; buttonNumber <= 6; buttonNumber++)
+            {
+                string valueToDisplay = $"Button #{buttonNumber}";
+                <button type="button"
+                    class="btn btn-secondary" 
+                    @onclick="() => ButtonClick(valueToDisplay)">
+                @buttonNumber
+                </button>
+
+            }
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">
+            Pick a date:
+        </div>
+        <div class="col-sm-6">
+            <input type="date" placeholder="2023-03-16" @onchange="UpdateDateValue" />
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">
+            Pick a color:
+        </div>
+        <div class="col-sm-6">
+            <input type="color" placeholder="#0075ff" @onchange="UpdateColorValue" />
+        </div>
+    </div>
+    <div class="row mt-5">
+        <h2>
+            Text value: <strong>@TextValue</strong> 
+        </h2>
+        <h2>
+            Slider value: <strong>@SliderValue</strong>
+        </h2>
+        <h2>
+            Button value: <strong>@DisplayValue</strong>
+        </h2>
+        <h2>
+            Date value: <strong>@DateValue</strong>
+        </h2>
+        <h2>
+            Color value: <strong>@ColorValue</strong>
+        </h2>
+    </div>
+</div>
+
+@code 
+{
+    private string SliderValue = "";
+    private string TextValue = "";
+    private string DisplayValue = "";
+    private string DateValue = "";
+    private string ColorValue = "";
+
+
+    private void UpdateSliderValue(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value.ToString(), out int result))
+        {
+            SliderValue = e.Value.ToString();
+        }
+    }
+
+    private void UpdateNumericValue(ChangeEventArgs e)
+    {
+        TextValue = e.Value.ToString();
+    }
+
+    private void UpdateColorValue(ChangeEventArgs e)
+    {
+        ColorValue = e.Value.ToString();
+    }
+
+    private void UpdateDateValue(ChangeEventArgs e)
+    {
+        DateValue = e.Value.ToString();
+    }
+
+    private void ButtonClick(string displayValue)
+    {
+        DisplayValue = displayValue;
+    }
+}
